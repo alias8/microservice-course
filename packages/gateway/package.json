@@ -4,7 +4,7 @@
   "description": "API gateway for our services",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "ts-node-dev server.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,8 @@
     "graphql-tools": "^3.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "@types/express": "^4.17.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.5"
   }
 }
