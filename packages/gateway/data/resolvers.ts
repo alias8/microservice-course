@@ -22,9 +22,10 @@ export const resolvers = {
     mail: (_: any, args: any) => mockMails[0]
   },
   Mutation: {
-    mail: (_, args) => {
-      mockMails[0] = args;
-      return args;
+    // @ts-ignore
+    mail: (_: any, { subject, receiver, content }) => {
+      mockMails[0] = { subject, receiver, content };
+      return { subject, receiver, content };
     }
   }
 };
