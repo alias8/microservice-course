@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const mockMails = [
   {
     subject: "subject 1",
@@ -16,9 +18,15 @@ const mockMails = [
   }
 ];
 
+const getMails = async () => {
+  return (await axios.get(`http://localhost:4000/mails`)).data.payload;
+};
+
 export const resolvers = {
   Query: {
-    mails: () => mockMails,
+    mails: async () => {
+      return getMails();
+    },
     mail: (_: any, args: any) => mockMails[0]
   },
   Mutation: {
