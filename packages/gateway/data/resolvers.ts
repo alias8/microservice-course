@@ -1,39 +1,34 @@
 import axios from "axios";
+import port from "../../database_service/config";
 
-const mockMails = [
-  {
-    subject: "subject 1",
-    receiver: "test1@test.com",
-    content: "content 1"
-  },
-  {
-    subject: "subject 2",
-    receiver: "test2@test.com",
-    content: "content 2"
-  },
-  {
-    subject: "subject 3",
-    receiver: "test3@test.com",
-    content: "content 3"
-  }
-];
+const hostname = "http://localhost";
+const databaseURL = `${hostname}:${port}`;
 
-const getMails = async () => {
-  return (await axios.get(`http://localhost:4000/mails`)).data.payload;
+const get = async (path: string) => {
+  console.log(`requesting: ${databaseURL}/${path}`);
+  return (await axios.get(`${databaseURL}/${path}`)).data.payload;
+};
+
+const post = async (path: string, body: any) => {
+  return (
+    await axios.post(`${databaseURL}/${path}`, {
+      ...body
+    })
+  ).data.payload;
 };
 
 export const resolvers = {
   Query: {
-    mails: async () => {
-      return getMails();
-    },
-    mail: (_: any, args: any) => mockMails[0]
+    mails: async () => get("mails"),
+    getMail: (_: any, { id }: { id: string }) => get(`mails/${id}`)
   },
   Mutation: {
-    // @ts-ignore
-    mail: (_: any, { subject, receiver, content }) => {
-      mockMails[0] = { subject, receiver, content };
-      return { subject, receiver, content };
-    }
+    mail: (_: any, args: IEmail) => post("mails", args)
   }
 };
+
+export interface IEmail {
+  subject: string;
+  receiver: string;
+  content: string;
+}

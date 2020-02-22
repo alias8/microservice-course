@@ -4,7 +4,7 @@
   "description": "API gateway for our services",
   "main": "server.js",
   "scripts": {
-    "server": "ts-node-dev server.ts"
+    "start": "ts-node-dev server.ts"
   },
   "keywords": [],
   "author": "",

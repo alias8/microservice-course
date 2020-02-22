@@ -4,7 +4,7 @@ import { resolvers } from "./resolvers";
 export const typeDefs = `
     type Query {
         mails: [Mail]
-        mail(subject: String!, receiver: String!): Mail 
+        getMail(id: ID!): Mail 
     }
     
     type Mutation {

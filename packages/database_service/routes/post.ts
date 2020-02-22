@@ -1,7 +1,11 @@
-import { Express } from "express";
+import { Express, Response } from "express";
 import { Mail } from "../dbUtil/Models/Mail";
+import { IEmail } from "../../gateway/data/resolvers";
 
-const mailHandler = async ({ body: { subject, receiver, content } }, res) => {
+const mailHandler = async (
+  { body: { subject, receiver, content } }: { body: IEmail },
+  res: Response
+) => {
   if (!subject || !receiver || !content) {
     res.sendStatus(400).send({
       message: "You forgot some parameters",
@@ -32,7 +36,7 @@ const mailHandler = async ({ body: { subject, receiver, content } }, res) => {
 };
 
 function applyRoutes(server: Express) {
-  server.get("/mails", mailHandler);
+  server.post("/mails", mailHandler);
 }
 
 export default applyRoutes;
