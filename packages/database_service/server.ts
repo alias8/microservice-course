@@ -11,12 +11,12 @@ import configProd from "./config/config.prod";
 import configDev from "./config/config.dev";
 
 export const server = express();
-
-applyGetRoutes(server);
-applyPostRoutes(server);
-
+// define middleware before routes
 server.use(bodyParser.json()).listen(port, () => {
   console.log(`database service listening on port ${port}`);
 });
+
+applyGetRoutes(server);
+applyPostRoutes(server);
 
 configDB(process.env.NODE_ENV === "production" ? configProd : configDev);
